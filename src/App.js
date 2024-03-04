@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback } from "react";
+let funccount = new Set();
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [number, setNumber] = useState(0);
 
-function App() {
+  const incrementCounter = useCallback(() => {
+    setCount(count + 1);
+  }, [count]);
+  const decrementCounter = useCallback(() => {
+    setCount(count - 1);
+  }, [count]);
+  const incrementNumber = useCallback(() => {
+    setNumber(number + 1);
+  }, [number]);
+
+  funccount.add(incrementCounter);
+  funccount.add(decrementCounter);
+  funccount.add(incrementNumber);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "center",
+            justifyContent: "end",
+            margin: "auto",
+            marginTop: "150px",
+            width: "350px",
+            padding: "20px",
+            height: "300px",
+            fontSize: "20px",
+            boxShadow: "0px 2px 8px 4px grey",
+            borderRadius: "5px",
+            backgroundColor:"blue",
+          }}
+      >
+        {" "}
+        <p>Count: {count}</p>
+        <p>Function Count: {funccount.size}</p>
+        <button onClick={incrementCounter}>
+          Увеличить счетчик
+        </button>
+        <button onClick={decrementCounter}>
+          Счетчик уменьшения
+        </button>
+        <button onClick={incrementNumber}>
+          Увеличить число
+        </button>
+      </div>
   );
-}
+};
 
 export default App;
